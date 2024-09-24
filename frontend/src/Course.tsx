@@ -21,6 +21,14 @@ const sampleData: ICourse = {
     org: '資工系（學） 大碩',
 }
 
+/**TODO: 
+ * 自適應
+ * 
+ * 英語授課
+ * 學分數
+ * 
+ * 科目代碼
+*/
 export default function Course({ data }: { data: ICourse }) {
     if (!data) {
         data = sampleData
