@@ -7,6 +7,15 @@ import { useRef } from 'react'
 export default function Search() {
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        if (
+            !academicRef.current ||
+            !teacherRef.current ||
+            !courseRef.current ||
+            !courseCodeRef.current
+        ) {
+            alert('Some ref missing')
+            return
+        }
         console.log(
             academicRef.current.value,
             teacherRef.current.value,
@@ -15,10 +24,10 @@ export default function Search() {
         )
     }
 
-    const academicRef = useRef(document.createElement('input'))
-    const teacherRef = useRef(document.createElement('input'))
-    const courseRef = useRef(document.createElement('input'))
-    const courseCodeRef = useRef(document.createElement('input'))
+    const academicRef = useRef<HTMLInputElement>()
+    const teacherRef = useRef<HTMLInputElement>()
+    const courseRef = useRef<HTMLInputElement>()
+    const courseCodeRef = useRef<HTMLInputElement>()
 
     return (
         <form onSubmit={(e) => onSubmit(e)}>
