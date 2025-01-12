@@ -1,5 +1,15 @@
-import { Autocomplete, Box, Button, FormGroup, TextField } from '@mui/material'
+import { Button } from '@/components/ui/button'
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { useRef } from 'react'
+import { useForm } from 'react-hook-form'
 
 /**
  *TODO: 新增愛心偏好順序 useAutoCompelete auto-submit after 1s
@@ -13,8 +23,7 @@ export default function Search() {
             !courseRef.current ||
             !courseCodeRef.current
         ) {
-            alert('Some ref missing')
-            return
+            throw new Error('Some ref missing')
         }
         console.log(
             academicRef.current.value,
@@ -28,39 +37,51 @@ export default function Search() {
     const teacherRef = useRef<HTMLInputElement>()
     const courseRef = useRef<HTMLInputElement>()
     const courseCodeRef = useRef<HTMLInputElement>()
+    /**TODO: */
+    const form = useForm()
 
     return (
-        <form onSubmit={(e) => onSubmit(e)}>
-            <Box sx={{ margin: 3, width: 'max-content' }}>
-                <FormGroup>
-                    <Autocomplete
-                        options={['通識', '體育', '科技', '資工', '1', '2', '3']}
-                        sx={{ width: 250 }}
-                        renderInput={(params) => (
-                            <TextField {...params} label="開課系所" inputRef={academicRef} />
-                        )}
-                    />
-                    <TextField
-                        label="教師名稱"
-                        sx={{ display: 'block', mt: 1 }}
-                        inputRef={teacherRef}
-                    />
-                    <TextField
-                        label="課程名稱"
-                        sx={{ display: 'block', mt: 1 }}
-                        inputRef={courseRef}
-                    />
-                    <TextField
-                        label="開課序號"
-                        sx={{ display: 'block', mt: 1 }}
-                        inputRef={courseCodeRef}
-                        type="number"
-                    />
-                    <Button variant="contained" type="submit" sx={{ mt: 1 }}>
-                        查詢
-                    </Button>
-                </FormGroup>
-            </Box>
-        </form>
+        <Form {...form}>
+            <form onSubmit={(e) => {}} className="w-2/3">
+                <FormField
+                    name=""
+                    control={form.control}
+                    render={({ field }) => (
+                        <>
+                            <FormItem>
+                                <FormLabel>開課系所</FormLabel>
+                                <FormControl>
+                                    {/* TODO: auto compelete(combobox) */}
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            <FormItem>
+                                <FormLabel className="select-none">教師名稱</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            <FormItem>
+                                <FormLabel className="select-none">課程名稱</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            <FormItem>
+                                <FormLabel className="select-none">開課序號</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        </>
+                    )}
+                />
+                <Button type="submit">搜尋</Button>
+            </form>
+        </Form>
     )
 }
