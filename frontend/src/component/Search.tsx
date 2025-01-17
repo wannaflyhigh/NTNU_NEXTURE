@@ -1,15 +1,7 @@
 import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useRef } from 'react'
-import { useForm } from 'react-hook-form'
+import { Label } from '@radix-ui/react-label'
+import React, { useRef } from 'react'
 
 /**
  *TODO: 新增愛心偏好順序 useAutoCompelete auto-submit after 1s
@@ -33,55 +25,27 @@ export default function Search() {
         )
     }
 
-    const academicRef = useRef<HTMLInputElement>()
-    const teacherRef = useRef<HTMLInputElement>()
-    const courseRef = useRef<HTMLInputElement>()
-    const courseCodeRef = useRef<HTMLInputElement>()
-    /**TODO: */
-    const form = useForm()
+    const academicRef = useRef<HTMLInputElement>(null)
+    const teacherRef = useRef<HTMLInputElement>(null)
+    const courseRef = useRef<HTMLInputElement>(null)
+    const courseCodeRef = useRef<HTMLInputElement>(null)
 
     return (
-        <Form {...form}>
-            <form onSubmit={(e) => {}} className="w-2/3">
-                <FormField
-                    name=""
-                    control={form.control}
-                    render={({ field }) => (
-                        <>
-                            <FormItem>
-                                <FormLabel>開課系所</FormLabel>
-                                <FormControl>
-                                    {/* TODO: auto compelete(combobox) */}
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            <FormItem>
-                                <FormLabel className="select-none">教師名稱</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            <FormItem>
-                                <FormLabel className="select-none">課程名稱</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            <FormItem>
-                                <FormLabel className="select-none">開課序號</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        </>
-                    )}
-                />
-                <Button type="submit">搜尋</Button>
-            </form>
-        </Form>
+        <form onSubmit={onSubmit} className="w-2/3 ">
+            <Label htmlFor="academic">開課系所</Label>
+            {/* TODO: auto compelete(combobox) */}
+            <Input ref={academicRef} id="academic" />
+
+            <Label htmlFor="teacher">教師名稱</Label>
+            <Input ref={teacherRef} id="teacher" />
+
+            <Label htmlFor="course">課程名稱</Label>
+            <Input ref={courseRef} id="course" />
+
+            <Label htmlFor="courseCode">開課序號</Label>
+            <Input ref={courseCodeRef} id="courseCode" />
+
+            <Button type="submit">搜尋</Button>
+        </form>
     )
 }
