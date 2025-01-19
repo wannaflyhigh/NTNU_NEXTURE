@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@radix-ui/react-label'
 import React, { useRef } from 'react'
@@ -31,21 +32,29 @@ export default function Search() {
     const courseCodeRef = useRef<HTMLInputElement>(null)
 
     return (
-        <form onSubmit={onSubmit} className="w-2/3 ">
-            <Label htmlFor="academic">開課系所</Label>
-            {/* TODO: auto compelete(combobox) */}
-            <Input ref={academicRef} id="academic" />
+        <Card>
+            <CardHeader>
+                <CardTitle>查詢課程</CardTitle>
+                <CardDescription>輸入最少任一條件即可送出</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <form onSubmit={onSubmit}>
+                    <Label htmlFor="academic">開課系所</Label>
+                    {/* TODO: auto compelete(combobox) */}
+                    <Input ref={academicRef} id="academic" />
 
-            <Label htmlFor="teacher">教師名稱</Label>
-            <Input ref={teacherRef} id="teacher" />
+                    <Label htmlFor="teacher">教師名稱</Label>
+                    <Input ref={teacherRef} id="teacher" />
 
-            <Label htmlFor="course">課程名稱</Label>
-            <Input ref={courseRef} id="course" />
+                    <Label htmlFor="course">課程名稱</Label>
+                    <Input ref={courseRef} id="course" />
 
-            <Label htmlFor="courseCode">開課序號</Label>
-            <Input ref={courseCodeRef} id="courseCode" />
+                    <Label htmlFor="courseCode">開課序號</Label>
+                    <Input ref={courseCodeRef} id="courseCode" />
 
-            <Button type="submit">搜尋</Button>
-        </form>
+                    <Button type="submit">搜尋</Button>
+                </form>
+            </CardContent>
+        </Card>
     )
 }
