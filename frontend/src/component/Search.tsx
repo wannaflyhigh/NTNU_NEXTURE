@@ -2,31 +2,27 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@radix-ui/react-label'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
+import { AcademicAutoCompelete } from './AcademicAutoCompelete'
 
 /**
- *TODO: 新增愛心偏好順序 useAutoCompelete auto-submit after 1s
+ *TODO: auto-submit after 1s
  */
 export default function Search() {
     function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        if (
-            !academicRef.current ||
-            !teacherRef.current ||
-            !courseRef.current ||
-            !courseCodeRef.current
-        ) {
+        if (!teacherRef.current || !courseRef.current || !courseCodeRef.current) {
             throw new Error('Some ref missing')
         }
         console.log(
-            academicRef.current.value,
+            academicState,
             teacherRef.current.value,
             courseRef.current.value,
             courseCodeRef.current.value,
         )
     }
 
-    const academicRef = useRef<HTMLInputElement>(null)
+    const [academicState, setAcademicState] = useState('')
     const teacherRef = useRef<HTMLInputElement>(null)
     const courseRef = useRef<HTMLInputElement>(null)
     const courseCodeRef = useRef<HTMLInputElement>(null)
@@ -39,9 +35,13 @@ export default function Search() {
             </CardHeader>
             <CardContent>
                 <form onSubmit={onSubmit}>
-                    <Label htmlFor="academic">開課系所</Label>
-                    {/* TODO: auto compelete(combobox) */}
-                    <Input ref={academicRef} id="academic" />
+                    <div className="flex flex-col">
+                        <Label htmlFor="academic">開課系所</Label>
+                        <AcademicAutoCompelete
+                            academicState={academicState}
+                            setAcademicState={setAcademicState}
+                        />
+                    </div>
 
                     <Label htmlFor="teacher">教師名稱</Label>
                     <Input ref={teacherRef} id="teacher" />
